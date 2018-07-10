@@ -1,0 +1,21 @@
+﻿using JWT;
+using Newtonsoft.Json;
+
+namespace Backend.SDK
+{
+    /// <summary>
+    /// Remove SDK dependency towards newtonsoft.json.
+    /// </summary>
+    public class CustomJSONSerializer : IJsonSerializer
+    {
+        public string Serialize(object obj)
+        {
+            return JsonConvert.SerializeObject(obj);
+        }
+
+        public T Deserialize<T>(string json)
+        {
+            return JsonConvert.DeserializeObject<T>(json);
+        }
+    }
+}
