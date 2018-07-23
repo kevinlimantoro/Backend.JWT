@@ -25,7 +25,7 @@ namespace Backend.SDK.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:59539/admin/ValidateAccountPermission")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:59539/SDK/ValidateAccountPermission")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));

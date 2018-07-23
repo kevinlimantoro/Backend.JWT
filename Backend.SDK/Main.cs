@@ -50,6 +50,10 @@ namespace Backend.SDK
         /// GET only the Validity of the JWT Token, and check permission of the function it try to access
         /// </summary>
         public static bool IsValid { get { return _BaseResult.IsValid; } }
+        /// <summary>
+        /// Get back the error detail
+        /// </summary>
+        public static APIResult APIResult { get { return _BaseResult.APIResult; } }
         #endregion
 
         #region Public Validation Methods
@@ -61,8 +65,7 @@ namespace Backend.SDK
         {
             try
             {
-                var parsedString = Regex.Replace(HttpContext.Current.Request.QueryString.ToString(), "&.*token", "&token");
-                var token = HttpUtility.ParseQueryString(parsedString)["token"];
+                var token = HttpContext.Current.Request.QueryString["token"];
                 if (string.IsNullOrWhiteSpace(token))
                 {
                     _BaseResult = new BackendSDKModel() { IsValid = false };
@@ -71,11 +74,24 @@ namespace Backend.SDK
                 {
                     _BaseResult = token.DecodeToken<BackendSDKModel>();
                     _BaseResult.IsValid = APIValidate();
+                    if(_BaseResult.IsValid == false)
+                        _BaseResult.APIResult = new APIResult() { Result = -99, Outstring = "No Permission" };
                 }
             }
-            catch (Exception e)
+            catch (TokenExpiredException e)
             {
-
+                var apiRes = new APIResult() { Result = -96, Outstring = e.Message };
+                _BaseResult = new BackendSDKModel() { IsValid = false, APIResult = apiRes };
+            }
+            catch (SignatureVerificationException e)
+            {
+                var apiRes = new APIResult() { Result = -97, Outstring = e.Message };
+                _BaseResult = new BackendSDKModel() { IsValid = false, APIResult = apiRes };
+            }
+            catch (InvalidTokenPartsException e)
+            {
+                var apiRes = new APIResult() { Result = -98, Outstring = e.Message };
+                _BaseResult = new BackendSDKModel() { IsValid = false, APIResult = apiRes };
             }
         }
 

@@ -5,7 +5,9 @@ namespace Backend.SDK
     public class BackendSDKModel
     {
         private string _PermissionFunctionID;
-
+        /// <summary>
+        /// Permission ID / FUnctionID
+        /// </summary>
         public string PermissionFunctionID
         {
             get { return _PermissionFunctionID; }
@@ -13,7 +15,9 @@ namespace Backend.SDK
         }
 
         private bool _IsValid;
-
+        /// <summary>
+        /// Value will be set after calling Init() to validate token and permission
+        /// </summary>
         public bool IsValid
         {
             get { return _IsValid; }
@@ -21,7 +25,9 @@ namespace Backend.SDK
         }
 
         private string _AccountID;
-
+        /// <summary>
+        /// Backend_Account AccountID
+        /// </summary>
         public string AccountID
         {
             get { return _AccountID; }
@@ -29,7 +35,9 @@ namespace Backend.SDK
         }
 
         private int _BrandID;
-
+        /// <summary>
+        /// Backend Brand ID 2-7, 998, 999
+        /// </summary>
         public int BrandID
         {
             get { return _BrandID; }
@@ -37,7 +45,9 @@ namespace Backend.SDK
         }
 
         private string _CurrencyID;
-
+        /// <summary>
+        /// Currency ID
+        /// </summary>
         public string CurrencyID
         {
             get { return _CurrencyID; }
@@ -45,11 +55,23 @@ namespace Backend.SDK
         }
 
         private string _LanguageCode;
-
+        /// <summary>
+        /// en-us / zh-tw
+        /// </summary>
         public string LanguageCode
         {
             get { return _LanguageCode; }
             set { _LanguageCode = value; }
+        }
+
+        private APIResult apiResult;
+        /// <summary>
+        /// In case of IsValid is false, check the error here
+        /// </summary>
+        public APIResult APIResult
+        {
+            get { return apiResult; }
+            set { apiResult = value; }
         }
 
     }
